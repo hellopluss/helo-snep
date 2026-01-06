@@ -1,0 +1,6 @@
+body { background-color: #FFFC00; display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; margin: 0; }
+.login-container { text-align: center; width: 300px; }
+input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 30px; border: none; }
+.login-btn { width: 100%; padding: 15px; background: #00ADFF; color: white; border-radius: 30px; border: none; font-weight: bold; }
+.spinner { width: 40px; height: 40px; border: 4px solid #000; border-top: 4px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; margin: auto; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
